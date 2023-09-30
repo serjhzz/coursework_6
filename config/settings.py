@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-crf$9%#5c1+qxoi^*=%h=rra^_ocy39k!cr1(tb6ex-2+_j((k'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'MMS',
-        'USER': 'postgres',
-        'PASSWORD': 351762,
-        'HOST': '127.0.0.1',
-        'PORT': 5432,
+        'NAME': os.getenv('PSQL_NAME'),
+        'USER': os.getenv('PSQL_USER'),
+        'PASSWORD': os.getenv('PSQL_PASSWORD'),
+        'HOST': os.getenv('PSQL_HOST'),
+        'PORT': os.getenv('PSQL_PORT'),
     }
 }
 
@@ -134,8 +134,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 587
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
@@ -154,7 +154,7 @@ CACHE_ENABLED = True
 if CACHE_ENABLED:
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379",
+            "BACKEND": os.getenv('CACHE_BACKEND'),
+            "LOCATION": os.getenv('CACHE_LOCATION'),
         }
     }
